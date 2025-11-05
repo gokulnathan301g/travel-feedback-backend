@@ -3,15 +3,13 @@ services:
     name: travel-feedback-collector
     env: docker
     plan: free
-    dockerfilePath: backend/Dockerfile   # Adjusted path to your backend Dockerfile
-    buildCommand: "./mvnw clean package -DskipTests"  # Build command for your backend
-    startCommand: "java -jar target/*.jar"  # Start command for your Java app (adjust if necessary)
+    dockerfilePath: backend/Dockerfile   # Path to the Dockerfile
+    buildCommand: ""
+    startCommand: ""
     envVars:
       - key: JDBC_DATABASE_URL
-        value: jdbc:postgresql://dpg-d45drjmuk2gs73cfg84g-a.oregon-postgres.render.com:5432/traval_db
+        value: jdbc:postgresql://<YOUR_DB_HOST>:5432/<YOUR_DB_NAME>
       - key: DB_USERNAME
-        value: traval_db_user
+        value: <YOUR_DB_USER>
       - key: DB_PASSWORD
-        value: Me9ky3wAd2mYf4CWWvLQs5PBzXgMUqxT
-      - key: SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE
-        value: Asia/Kolkata
+        value: <YOUR_DB_PASSWORD>
