@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Travel Explorer - Share Experience</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Share Your Travel Experience</h1>
+    <form id="expForm">
+      <label>Place / City name</label>
+      <input type="text" id="city" name="city" required />
+      <label>Title (short)</label>
+      <input type="text" id="title" name="title" required />
+      <label>Your experience (details)</label>
+      <textarea id="content" name="content" rows="6" required></textarea>
+      <label>Your name (optional)</label>
+      <input type="text" id="author" name="author" />
+      <button id="submitBtn" type="button">Submit Experience</button>
+    </form>
+
+    <div id="msg" class="hidden"></div>
+
+    <hr />
+    <h2>Search Experiences</h2>
+    <input id="searchInput" placeholder="Search by city or place..." />
+    <button id="searchBtn" type="button">Search</button>
+
+    <div id="results"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
