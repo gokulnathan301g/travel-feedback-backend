@@ -3,7 +3,7 @@ services:
     name: travel-feedback-backend
     env: docker
     plan: free
-    dockerfilePath: backend/Dockerfile
+    dockerfilePath: backend/Dockerfile   # ✅ correct path to your Dockerfile
     buildCommand: ""
     startCommand: ""
     envVars:
@@ -21,3 +21,5 @@ services:
         value: org.hibernate.dialect.PostgreSQLDialect
       - key: SPRING_JPA_PROPERTIES_HIBERNATE_JDBC_TIME_ZONE
         value: Asia/Kolkata
+      - key: SERVER_PORT
+        value: 8080
