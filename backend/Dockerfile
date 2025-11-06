@@ -1,16 +1,28 @@
-# Multi-stage Dockerfile for building and running the Spring Boot app
-# Build stage
-FROM maven:3.9.4-eclipse-temurin-17 AS build
-WORKDIR /workspace
-COPY AnswerSaverApp/backend/pom.xml ./ 
-# copy only pom first to leverage cache for maven deps
-COPY AnswerSaverApp/backend/src ./src
-RUN mvn -f pom.xml -DskipTests clean package
-
-# Run stage
-FROM eclipse-temurin:17-jre
+# ================================
+# Stage 1: Build the Spring Boot app
+# ================================
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-# Copy jar from build stage (assumes spring-boot-maven-plugin produced an executable jar)
-COPY --from=build /workspace/target/*.jar app.jar
+
+# Copy pom.xml and download dependencies first
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
+
+# Copy the source code and build the app
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# ================================
+# Stage 2: Run the app
+# ================================
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+# Copy the built JAR from the previous stage
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose the port that Spring Boot runs on
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+
+# Run the Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]
